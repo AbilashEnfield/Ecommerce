@@ -1,0 +1,379 @@
+{% extends 'store/main.html' %}
+{%load static %}
+{% block link %}
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/userProfile.css' %}" type="text/css">
+
+{% endblock link%}
+
+{% block content %}
+<div class="main-content">
+    <!-- Top navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#" target="_blank">User
+                profile</a>
+            <!-- Form -->
+            <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                <div class="form-group mb-0">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Search" type="text">
+                    </div>
+                </div>
+            </form>
+            <!-- User -->
+            <ul class="navbar-nav align-items-center d-none d-md-flex">
+                <li class="nav-item dropdown">
+                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="{{customer.userimage}}">
+                </span>
+                            <div class="media-body ml-2 d-none d-lg-block">
+                                <span class="mb-0 text-sm  font-weight-bold">{{customer.user}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                        <div class=" dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome!</h6>
+                        </div>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>My profile</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-settings-gear-65"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Activity</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-support-16"></i>
+                            <span>Support</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#!" class="dropdown-item">
+                            <i class="ni ni-user-run"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+         style="min-height: 600px; background-image: url({{customer.userimage}}); background-size: cover; background-position: center top;">
+        <!-- Mask -->
+        <span class="mask bg-gradient-default opacity-8"></span>
+        <!-- Header container -->
+        <div class="container-fluid d-flex align-items-center">
+            <div class="row">
+                <div class="col-lg-7 col-md-10">
+                    <h1 class="display-2 text-white">Hello|{{customer}}</h1>
+
+                    <a href="{% url 'editProfile' %}"><button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                          Edit Profile
+                        </button></a>
+                    <div class="" style="padding:10px;">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                          Invite
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <form action="{%url 'sendReferral'%}" method="POST">
+                                      {%csrf_token%}
+                                      <label>Mobile no.</label>
+                                      <input type="number" name="phone" placeholder="Enter Mobile no.">
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Send</button>
+                                      </div>
+                                  </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                <div class="card card-profile shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="#">
+                                    <img src="{{customer.userimage}}" class="rounded-circle">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
+                            <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+                        </div>
+                    </div>
+                    <div class="card-body pt-0 pt-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                                    <div>
+                                        <span class="heading">22</span>
+                                        <span class="description">Friends</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">10</span>
+                                        <span class="description">Photos</span>
+                                    </div>
+                                    <div>
+                                        <span class="heading">89</span>
+                                        <span class="description">Comments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h3>
+                                {{customer.user}}<span class="font-weight-light">, 25</span>
+                            </h3>
+                            <div class="h5 font-weight-300">
+                                <i class="ni location_pin mr-1"></i> Calicut, India
+                            </div>
+                            <div class="h5 mt-4">
+                                <i class="ni business_briefcase-24 mr-2"></i>Full Stack Developer
+                            </div>
+                            <!--                <div>-->
+                            <!--                  <i class="ni education_hat mr-2"></i>University of Computer Science-->
+                            <!--                </div>-->
+                            <!--                <hr class="my-4">-->
+                            <!--                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>-->
+                            <!--                <a href="#">Show more</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">My account</h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <h6 class="heading-small text-muted mb-4">User information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label">Username</label>
+                                            <label class="form-control-label2">: {{customer.user}}</label>
+                                            <!--                        <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">-->
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Email</label>
+                                            <label class="form-control-label2">: {{customer.user.email}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label">Mobile no.</label>
+                                            <label class="form-control-label">{{customer.phone_number}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <!-- Address -->
+                            <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-address">Address</label>
+                                            <input id="input-address" class="form-control form-control-alternative"
+                                                   placeholder="Home Address"
+                                                   value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-city">City</label>
+                                            <input type="text" id="input-city"
+                                                   class="form-control form-control-alternative" placeholder="City"
+                                                   value="New York">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group focused">
+                                            <label class="form-control-label" for="input-country">Country</label>
+                                            <input type="text" id="input-country"
+                                                   class="form-control form-control-alternative" placeholder="Country"
+                                                   value="United States">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-country">Postal code</label>
+                                            <input type="number" id="input-postal-code"
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Postal code">
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Product</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for item in items%}
+                {%for i in item%}
+                <tr>
+                    <td><img style="width:50px;height:50px" class="thumbnail" src="{{i.product.imageURL}}"></td>
+                    <td><h3 style="size:30px;"><strong>{{i.product.name}}</strong></h3></td>
+                    <td><h3 style="display: inline-block;float:right">{{i.quantity}}</h3></td>
+                    <td>{{i.product.price}}</td>
+                    <td>{{i.order.date_ordered}}</td>
+                    <td>{{i.order.order_status}}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js" crossorigin="anonymous"></script>
+        <script>
+            let result = document.querySelector('.result'),
+            img_result = document.querySelector('.img-result'),
+            img_w = document.querySelector('.img-w'),
+            img_h = document.querySelector('.img-h'),
+            options = document.querySelector('.optionss'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.cropped'),
+            dwn = document.querySelector('.download'),
+            upload = document.querySelector('#file-input'),
+            cropper = '';
+
+            // on change show image with crop options
+            upload.addEventListener('change', (e) => {
+              if (e.target.files.length) {
+                    // start file reader
+                const reader = new FileReader();
+                reader.onload = (e)=> {
+                  if(e.target.result){
+                            // create new image
+                            let img = document.createElement('img');
+                            img.id = 'image';
+                            img.src = e.target.result
+                            // clean result before
+                            result.innerHTML = '';
+                            // append new image
+                    result.appendChild(img);
+                            // show save btn and options
+                            save.classList.remove('hide');
+                            options.classList.remove('hide');
+                            // init cropper
+                            cropper = new Cropper(img,{
+                            viewMode: 3,});
+                  }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+              }
+            });
+
+            // save on click
+            save.addEventListener('click',(e)=>{
+              e.preventDefault();
+              // get result to data uri
+              let imgSrc = cropper.getCroppedCanvas({
+                    width: img_w.value // input value
+                }).toDataURL();
+              // remove hide class of img
+              cropped.classList.remove('hide');
+                img_result.classList.remove('hide');
+                // show image cropped
+              cropped.src = imgSrc;
+              console.log(imgSrc);
+              document.getElementById("imageurl").innerHTML = imgSrc;
+              dwn.classList.remove('hide');
+              dwn.download = 'imagename.png';
+              dwn.setAttribute('href',imgSrc);
+            });
+        </script>
+
+{%endblock content %}

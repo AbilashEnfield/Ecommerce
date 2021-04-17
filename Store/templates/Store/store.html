@@ -1,0 +1,107 @@
+{% extends 'store/main.html' %}
+{%load static %}
+{%block link %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/storeCoupon.css' %}">
+{%endblock link%}
+
+{% block coupon %}
+        <div id="dbanner" class="change-color">
+          <div class="dcontent">
+            SPECIAL CHRISTMAS DISCOUNT <strong>50% OFF</strong> WITH COUPON CODE: <code>{{couponCode}}</code> <span class="dtime">COUPON EXPIRES IN:</span><span id="dcountdown"></span>
+          </div>
+        </div>
+<script>
+
+$(function() {
+  var endDate = new Date();
+  endDate = new Date(2021, 12 - 1, 31);
+  $('#dcountdown').countdown({
+    until: endDate
+  });
+
+  $('#dclose').click(function() {
+    $(this).parent().slideUp();
+  });
+});
+
+</script>
+{% endblock coupon%}
+
+{% block content %}
+<style>
+.product-pic-zoom {
+	margin-bottom: 10px;
+	position: relative;
+	z-index: 1;
+}
+
+.product-pic-zoom img {
+	min-width: 100%;
+}
+
+.product-pic-zoom .zoom-icon {
+	position: absolute;
+	right: 20px;
+	top: 20px;
+}
+
+.product-pic-zoom .zoom-icon i {
+	color: #4c4c4c;
+	font-size: 14px;
+	width: 40px;
+	height: 40px;
+	border: 1px solid #d7d7d7;
+	text-align: center;
+	border-radius: 50%;
+	line-height: 37px;
+}
+</style>
+
+        <div class="row">
+            {%for product in products%}
+            <div class="col-lg-4">
+                {% if discounts == None %}
+                {% for discount in discounts %}
+                    {%if discount.product == product%}
+                <div class="product-pic-zoom">
+                    <img class="thumbnail" src="{{product.imageURL}}">
+                    <div class="zoom-icon">
+                        <i class=""><img  style="width:50px; height:50px; border-radius: 50%;" src="{%static 'images/50dis.png'%}" alt=""></i>
+                    </div>
+                </div>
+                    {%else%}
+                        <img class="thumbnail" src="{{product.imageURL}}">
+                    {%endif%}
+                {%endfor %}
+                {%else%}
+                    <img class="thumbnail" src="{{product.imageURL}}">
+                {%endif%}
+
+                <div class="box-element product">
+                <div>
+                    <div class="col-lg-3">
+                        <h6><strong>{{product.name}}</strong></h6>
+                    </div>
+                </div>
+                    <hr>
+                    {% if user.is_authenticated %}
+                        <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                    {% else %}
+                    <a href="user_login"><button class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button></a>
+                    {% endif %}
+                    <a class="btn btn-outline-success" href="{% url 'product_details' product.id %}">View</a>
+                    {% for discount in discounts %}
+                        {%if discount.product == product%}
+                            <h4 style="display: inline-block;float:right">Rs.{{discount.discountedPrice|floatformat:2}}</h4>
+                        {%else%}
+                            <h4 style="display: inline-block;float:right">Rs.{{product.price|floatformat:2}}</h4>
+                        {%endif%}
+                    {%endfor %}
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+<script>
+console.log("hi")
+</script>
+{%endblock content %}

@@ -1,0 +1,115 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic);
+body {
+  background-color: white;
+}
+
+#dbanner {
+  position: auto;
+  bottom: 0px;
+  height: auto;
+  width: 100%;
+  padding: 30px 0 30px 0;
+  color: #fff;
+  text-align: center;
+  font-family: "Open Sans";
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.dcontent {
+  padding: 0px 30px 0px 30px;
+  font-size: 16px;
+}
+
+.dcontent strong {
+  font-size: 30px;
+  color: yellow;
+  white-space: nowrap;
+}
+
+.dcontent code {
+  font-size: 30px;
+  padding: 2px 5px 2px 5px;
+  color: #EED183;
+  border: 1px dashed #EED183;
+  background-color: #0C3D4C;
+  white-space: nowrap;
+}
+
+.dtime {
+  font-size: 18px;
+  background-color: #FF2A2A;
+  padding: 0 10px 0 10px;
+  white-space: nowrap;
+}
+
+#dclose {
+  position: absolute;
+  font-size: 8px;
+  height: 20px;
+  line-height: 20px;
+  top: 5px;
+  right: 10px;
+  color: #fff;
+}
+
+#dclose:hover {
+  cursor: pointer;
+}
+
+.change-color {
+  background-color: #107460;
+  color: #FFF;
+  text-align: center;
+  animation-name: homeCycle;
+  animation-duration: 6s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: homeCycle;
+  -webkit-animation-duration: 6s;
+  -webkit-animation-direction: alternate;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes homeCycle {
+  0% {
+    background-color: #727272;
+  }
+  25% {
+    background-color: #86C14D;
+  }
+  50% {
+    background-color: #0088CC;
+  }
+  75% {
+    background-color: #0C3D4C;
+  }
+}
+
+@-webkit-keyframes homeCycle {
+  0% {
+    background-color: #727272;
+  }
+  25% {
+    background-color: #86C14D;
+  }
+  50% {
+    background-color: #0088CC;
+  }
+  75% {
+    background-color: #0C3D4C;
+  }
+}
+
+.countdown-section {
+  padding: 0 5px 0 5px;
+}
+
+.countdown-amount {
+  padding: 0 5px 0 0;
+}
+
+.countdown-period {
+  text-transform: uppercase;
+}
+
+.countdown-descr {}

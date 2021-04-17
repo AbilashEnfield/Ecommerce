@@ -1,0 +1,46 @@
+{% extends 'store/main.html' %}
+{%load static %}
+{% block link %}
+<!--    <link rel="stylesheet" href="{% static 'css/templateCss/style.css' %}" type="text/css">-->
+<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+
+
+<link href="{% static 'css/adminpanel/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/adminpanel/custom.css' %}" rel='stylesheet' type='text/css' />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+{% endblock link%}
+
+{% block content %}
+		<div id="page-wrapper">
+			<div class="main-page login-page ">
+				<h2 class="title1">Login</h2>
+				<div class="widget-shadow">
+					<div class="login-body">
+						<form action="#" method="post" class="form-group">
+							<input type="text" class="user form-control" name="username"  style="margin-bottom:2rem;" placeholder="Enter Your username" required="">
+
+							<input type="password" name="password" class="lock form-control" placeholder="Password" required="">
+							<div class="forgot-grid">
+								<label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i></i>Remember me</label>
+								<div class="forgot">
+									<a href="#">forgot password?</a>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+							<input type="submit" name="Sign In" value="Sign In">
+							<div class="registration">
+								Don't have an account ?
+								<a class="" href="signup.html">
+									Create an account
+								</a>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+<script src="{% static 'js/custom.js' %}"></script>
+{%endblock content %}

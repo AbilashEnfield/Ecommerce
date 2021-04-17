@@ -1,0 +1,210 @@
+{% extends 'store/main.html' %}
+{%load static %}
+{% block link %}
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link rel="stylesheet" href="{% static 'css/userProfile.css' %}" type="text/css">
+
+{% endblock link%}
+
+{% block content %}
+<div class="main-content">
+    <!-- Top navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+        <div class="container-fluid">
+            <!-- Brand -->
+            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#" target="_blank">User
+                profile</a>
+            <!-- Form -->
+            <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                <div class="form-group mb-0">
+                    <div class="input-group input-group-alternative">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                        <input class="form-control" placeholder="Search" type="text">
+                    </div>
+                </div>
+            </form>
+            <!-- User -->
+            <ul class="navbar-nav align-items-center d-none d-md-flex">
+                <li class="nav-item dropdown">
+                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="{{customer.userimage}}">
+                </span>
+                            <div class="media-body ml-2 d-none d-lg-block">
+                                <span class="mb-0 text-sm  font-weight-bold">{{customer.user}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                        <div class=" dropdown-header noti-title">
+                            <h6 class="text-overflow m-0">Welcome!</h6>
+                        </div>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-single-02"></i>
+                            <span>My profile</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-settings-gear-65"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-calendar-grid-58"></i>
+                            <span>Activity</span>
+                        </a>
+                        <a href="../examples/profile.html" class="dropdown-item">
+                            <i class="ni ni-support-16"></i>
+                            <span>Support</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#!" class="dropdown-item">
+                            <i class="ni ni-user-run"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Header -->
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+         style="min-height: 600px; background-image: url({{customer.userimage}}); background-size: cover; background-position: center top;">
+        <!-- Mask -->
+        <span class="mask bg-gradient-default opacity-8"></span>
+        <!-- Header container -->
+        <div class="container-fluid d-flex align-items-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-2 text-white">Hello|{{customer}}</h1>
+                      <form action="{%url 'editProfile'%}" method="POST">
+                          {%csrf_token%}
+<!--                          <div class="table-responsive"></div>-->
+                          <label>Username</label>
+                          <input type="text" name="Username" placeholder="{{customer}}">
+                          <br>
+                          <label>Email</label>
+                          <input type="email" name="email" placeholder="{{customer.user.email}}">
+                          <br>
+                          <label>Phone no.</label>
+                          <input type="number" name="phone" placeholder="{{customer.phone_number}}">
+                          <br>
+                          <label>Password</label>
+                          <input type="password" name="password" placeholder="I can't show Password">
+                          <br>
+                          <label class="col-form-label">Profile pic</label>
+                            <span class="avatar avatar-sm ">
+                              <img alt="Image placeholder" src="{{customer.userimage}}">
+                            </span>
+                          <div class="col-sm-10" >
+    <!--                                    <input type="file" name="image" class="form-control" placeholder="Image" required="" style="margin-bottom:1rem; border:none;">-->
+                                    <main class="pagee">
+    <!--                                            <h2>Upload ,Crop and save.</h2>-->
+                                        <!-- input file -->
+                                        <div class="boxx"  >
+                                            <input type="file" id="file-input">
+                                            <textarea name="mainImage" id="imageurl" class="hide" cols="30" style="display:none;" rows="10"></textarea>
+                                        </div>
+                                        <!-- leftbox -->
+                                        <div class="boxx-2" id="boxoo2" style=" display:none; width:100%; ">
+                                            <div class="result" style="width:500px; height:500px;"></div>
+                                        </div>
+                                        <!--rightbox-->
+                                        <div class="boxx-2 img-result hide">
+                                            <!-- result of crop -->
+                                            <img class="cropped" src="" alt="">
+                                        </div>
+                                        <!-- input file -->
+                                        <div class="boxx">
+                                            <div class="optionss hide">
+                                                <label> Width</label>
+                                                <input type="number" class="img-w" value="300" min="100" max="1200" />
+                                            </div>
+                                            <!-- save btn -->
+                                            <button class="btnn save hide">Save</button>
+                                            <!-- download btn -->
+                                            <a href="" class="btnn download hide">Download</a>
+                                        </div>
+                                    </main>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js" crossorigin="anonymous"></script>
+        <script>
+            let result = document.querySelector('.result'),
+            img_result = document.querySelector('.img-result'),
+            img_w = document.querySelector('.img-w'),
+            img_h = document.querySelector('.img-h'),
+            options = document.querySelector('.optionss'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.cropped'),
+            dwn = document.querySelector('.download'),
+            upload = document.querySelector('#file-input'),
+            cropper = '';
+
+            // on change show image with crop options
+            upload.addEventListener('change', (e) => {
+              if (e.target.files.length) {
+                    // start file reader
+                const reader = new FileReader();
+                reader.onload = (e)=> {
+                  if(e.target.result){
+                            // create new image
+                            let img = document.createElement('img');
+                            img.id = 'image';
+                            img.src = e.target.result
+                            // clean result before
+                            result.innerHTML = '';
+                            // append new image
+                    result.appendChild(img);
+                    document.getElementById("boxoo2").style.display = '';
+                            // show save btn and options
+                            save.classList.remove('hide');
+                            options.classList.remove('hide');
+                            // init cropper
+                            cropper = new Cropper(img,{
+                            viewMode: 3,});
+                  }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+              }
+            });
+
+            // save on click
+            save.addEventListener('click',(e)=>{
+              e.preventDefault();
+              // get result to data uri
+              let imgSrc = cropper.getCroppedCanvas({
+                    width: img_w.value // input value
+                }).toDataURL();
+              // remove hide class of img
+              cropped.classList.remove('hide');
+                img_result.classList.remove('hide');
+                // show image cropped
+              cropped.src = imgSrc;
+              console.log(imgSrc);
+              document.getElementById("imageurl").innerHTML = imgSrc;
+              dwn.classList.remove('hide');
+              dwn.download = 'imagename.png';
+              dwn.setAttribute('href',imgSrc);
+            });
+        </script>
+
+{%endblock content %}

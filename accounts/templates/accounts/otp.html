@@ -1,0 +1,35 @@
+{% extends 'accounts/base.html'%}
+{% load static%}
+{%block style%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}">
+
+{%endblock style%}
+{% block content%}
+        <div class="row">
+			<div class="col-md-5 mx-auto">
+			    <div id="first">
+				    <div class="myform form ">
+					    <div class="logo mb-3">
+						    <div class="col-md-12 text-center">
+							    <h1>OTP VALIDATION</h1>
+						    </div>
+					    </div>
+                        <form action="" method="post" name="login">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="phone">Mobile no.</label>
+                                <input type="number" name="phone"  class="form-control" id="phone" placeholder="Enter your mobile no.">
+                            </div>
+                            <div class="col-md-12 text-center ">
+                                <button type="submit" id="logbtn" class=" btn btn-block mybtn btn-primary tx-tfm">Send otp</button>
+                            </div>
+                        </form>
+                    </div>
+				</div>
+			</div>
+		</div>
+{% endblock content%}
+{%block java%}
+<script src="{%static 'js/login.js' %}"></script>
+{%endblock java%}
