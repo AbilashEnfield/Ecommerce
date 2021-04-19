@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '6+s0i)w^b)nnaru21nhn0pl=tnit&(aawtae7n9ms9dgyz@t&g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'accounts',
-    'Store.apps.StoreConfig',
+    'Store',
     'adminDashboard',
 ]
 
@@ -58,7 +57,7 @@ ROOT_URLCONF = 'Oniomanians.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Oniomanians/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,9 +78,9 @@ WSGI_APPLICATION = 'Oniomanians.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shopper_details',
-        'USER': 'postgres',
-        'PASSWORD': '7373',
+        'NAME': 'onio',
+        'USER': 'abhilash',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
