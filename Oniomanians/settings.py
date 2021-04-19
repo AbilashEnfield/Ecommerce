@@ -26,7 +26,7 @@ SECRET_KEY = '6+s0i)w^b)nnaru21nhn0pl=tnit&(aawtae7n9ms9dgyz@t&g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'Oniomanians.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [''],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
